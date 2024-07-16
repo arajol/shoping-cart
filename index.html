@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img id="first-img" src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default" id="first-minus">➖</button>
+                           <input type="text" class="form-control text-center" id="phones" value="1">
+                           <button class="btn btn-default" id="first-plus">➕</button>
+                        </div>
+                        <h5>$<span id="phone-price">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default" id="second-minus">➖</button>
+                           <input type="text" class="form-control text-center" id="cases" value="1">
+                           <button class="btn btn-default" id="second-plus">➕</button>
+                        </div>
+                        <h5>$<span id="case-price">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+                     <div class="col-md-4 status">
+                        <h5 id="sub-total">$1,278</h5>
+                        <h5>$0</h5>
+                        <h5 id="sub-total-price">$1,278</h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <script>
+      // Function to update the quantity and price
+      function updateQuantityAndPrice(inputId, increment, pricePerItem) {
+         // Get the input element for quantity
+         const quantityElement = document.getElementById(inputId);
+         // Parse the current quantity as a number
+         let quantity = parseFloat(quantityElement.value);
+         // Increment or decrement the quantity
+         quantity += increment;
+         // Ensure the quantity does not go below 1
+         if (quantity < 1) quantity = 1;
+         // Update the input value with the new quantity
+         quantityElement.value = quantity;
+         // Update the price display
+         const priceElement = document.getElementById(inputId === "phones" ? "phone-price" : "case-price");
+         priceElement.innerHTML = quantity * pricePerItem;
+      }
+
+      // Function to set up event listeners for buttons
+      function setupListeners(buttonId, inputId, increment, pricePerItem) {
+         const button = document.getElementById(buttonId);
+         button.addEventListener("click", function () {
+            updateQuantityAndPrice(inputId, increment, pricePerItem);
+            updateSubtotal();
+         });
+      }
+
+      // Function to update the subtotal price
+      function updateSubtotal() {
+         const phoneQuantity = parseFloat(document.getElementById("phones").value);
+         const caseQuantity = parseFloat(document.getElementById("cases").value);
+         const subtotal = (phoneQuantity * 1219) + (caseQuantity * 59);
+         document.getElementById("sub-total").innerHTML = `$${subtotal.toFixed(2)}`;
+         document.getElementById("sub-total-price").innerHTML = `$${subtotal.toFixed(2)}`;
+      }
+
+      // Setting up event listeners for the plus and minus buttons
+      setupListeners("first-plus", "phones", +1, 1219);
+      setupListeners("first-minus", "phones", -1, 1219);
+      setupListeners("second-plus", "cases", +1, 59);
+      setupListeners("second-minus", "cases", -1, 59);
+   </script>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+
+</html>
